@@ -66,6 +66,9 @@ parser SwitchIngressParser(
 // ---------------------------------------------------------------------------
 // Ingress
 // ---------------------------------------------------------------------------
+
+Register<bit<32>, bit<16>>(4096) bloom_filter;
+
 control SwitchIngress(
         inout header_t hdr,
         inout metadata_t ig_md,
@@ -79,11 +82,31 @@ control SwitchIngress(
         pktcount.count();
     }
 
+
+    RegisterAction<bit<32>, bit<16>, bit<32>>(bloom_filter) read = {
+        void apply(inout bit<32> value, out bit<32> rv) {
+            if (value == 0){
+                value = 0x0A32000b;
+            }
+            rv = value;
+        }
+    };
+
+    Hash<bit<16>>(HashAlgorithm_t.CRC16) hash;
     action LB_forward(mac_addr_t dst_mac, ipv4_addr_t dst_ip, PortId_t port) {
 
-        ig_intr_tm_md.ucast_egress_port = port;
-        hdr.ethernet.dst_addr = dst_mac;
-        hdr.ipv4.dst_addr = dst_ip;
+        {
+            temp = hash.get({   hdr.ipv4.src_addr, 
+                                hdr.ipv4.dst_addr, 
+                                hdr.udp.src_port, 
+                                hdr.udp.dst_port});
+            hdr.ipv4.dst_addr = bloom_filter_alu_1.execute(temp);
+        }
+
+        // ig_intr_tm_md.ucast_egress_port = port;
+        // hdr.ethernet.dst_addr = dst_mac;
+        // hdr.ipv4.dst_addr = dst_ip;
+        
 
         pktcount.count();
     }
@@ -106,6 +129,7 @@ control SwitchIngress(
     }
     action ipv4_forward(PortId_t port) {
         ig_intr_tm_md.ucast_egress_port = port;
+        hdr.ethernet.dst_addr = dst_mac;
         hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
     }
     
