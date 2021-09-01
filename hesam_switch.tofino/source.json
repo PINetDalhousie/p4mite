@@ -1,0 +1,1438 @@
+{
+    "schema_version": "1.0.0",
+    "symbols": [
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 99,
+                    "column": 38
+                }
+            ],
+            "symbol_name": "SwitchIngress.hash",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 95,
+                "column": 42
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 82,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 111,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 123,
+                    "column": 20
+                }
+            ],
+            "symbol_name": "SwitchIngress.pktcount",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 79,
+                "column": 51
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 103,
+                    "column": 33
+                }
+            ],
+            "symbol_name": "SwitchIngress.read",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 86,
+                "column": 61
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 169,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.ipv4_checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 166,
+                "column": 16
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 182,
+                    "column": 28
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.udp_checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 167,
+                "column": 16
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ipv4_checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 30,
+                "column": 20
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 50,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 60,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 61,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.udp_checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 31,
+                "column": 16
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 86,
+                    "column": 47
+                }
+            ],
+            "symbol_name": "bloom_filter",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 70,
+                "column": 32
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 201,
+                    "column": 8
+                }
+            ],
+            "symbol_name": "pipe",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 199,
+                "column": 33
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 99,
+                    "column": 21
+                },
+                {
+                    "file": "",
+                    "line": 103,
+                    "column": 46
+                }
+            ],
+            "symbol_name": "SwitchIngress.temp",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 99,
+                "column": 13,
+                "end_line": 102
+            },
+            "scope": [],
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 119,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.LB_forward",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 96,
+                "column": 12
+            },
+            "scope": [],
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 120,
+                    "column": 13
+                },
+                {
+                    "file": "",
+                    "line": 124,
+                    "column": 26
+                }
+            ],
+            "symbol_name": "SwitchIngress.drop",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 80,
+                "column": 12
+            },
+            "scope": [],
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 142,
+                    "column": 13
+                },
+                {
+                    "file": "",
+                    "line": 145,
+                    "column": 26
+                }
+            ],
+            "symbol_name": "SwitchIngress.drop_",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 127,
+                "column": 12
+            },
+            "scope": [],
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 141,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.ipv4_forward",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 130,
+                "column": 12
+            },
+            "scope": [],
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 150,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.LB",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 114,
+                "column": 11
+            },
+            "scope": [],
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 151,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.ipv4_lpm",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 136,
+                "column": 11
+            },
+            "scope": [],
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [],
+            "symbol_name": "tbl_hesam_switch152",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 152,
+                "column": 37
+            },
+            "scope": [],
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 132,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ethernet.dst_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 149,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ipv4",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 100,
+                    "column": 33
+                },
+                {
+                    "file": "",
+                    "line": 103,
+                    "column": 13
+                },
+                {
+                    "file": "",
+                    "line": 116,
+                    "column": 13
+                },
+                {
+                    "file": "",
+                    "line": 138,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ipv4.dst_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 99,
+                    "column": 49
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ipv4.src_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 133,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 133,
+                    "column": 24
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ipv4.ttl",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 102,
+                    "column": 33
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.udp.dst_port",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 101,
+                    "column": 33
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.udp.src_port",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 73,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 81,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 128,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngress.ig_intr_dprsr_md.drop_ctl",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 77,
+                "column": 57
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 152,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngress.ig_intr_tm_md.bypass_egress",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 78,
+                "column": 51
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 131,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngress.ig_intr_tm_md.ucast_egress_port",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 78,
+                "column": 51
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 132,
+                    "column": 33
+                }
+            ],
+            "symbol_name": "SwitchIngress.ipv4_forward.dst_mac",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 130,
+                "column": 51
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 131,
+                    "column": 43
+                }
+            ],
+            "symbol_name": "SwitchIngress.ipv4_forward.port",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 130,
+                "column": 34
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 91,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.rv",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 87,
+                "column": 53
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 88,
+                    "column": 17
+                },
+                {
+                    "file": "",
+                    "line": 89,
+                    "column": 17
+                },
+                {
+                    "file": "",
+                    "line": 91,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngress.value",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 87,
+                "column": 34
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 188,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ethernet",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 189,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 172,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.diffserv",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 180,
+                    "column": 14
+                },
+                {
+                    "file": "",
+                    "line": 183,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.dst_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 175,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.flags",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 176,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.frag_offset",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 169,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.hdr_checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 174,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.identification",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 171,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.ihl",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 178,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.protocol",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 179,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.src_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 173,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.total_len",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 177,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.ttl",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 170,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4.version",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 190,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.udp",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 182,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.udp.checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 162,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 184,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.ig_md.checksum_udp_tmp",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 163,
+                "column": 23
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 188,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 189,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 190,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.pkt",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 161,
+                "column": 20
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 39,
+                    "column": 21
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ethernet",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 40,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ethernet.ether_type",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 47,
+                    "column": 21
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.diffserv",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                },
+                {
+                    "file": "",
+                    "line": 50,
+                    "column": 32
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.dst_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.flags",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.frag_offset",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.hdr_checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.identification",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.ihl",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                },
+                {
+                    "file": "",
+                    "line": 51,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.protocol",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.src_addr",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.total_len",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.ttl",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 48,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.version",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 59,
+                    "column": 21
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.udp",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 60,
+                    "column": 32
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.udp.checksum",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 25,
+                "column": 22
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "util.p4",
+                    "line": 19,
+                    "column": 21
+                },
+                {
+                    "file": "",
+                    "line": 33,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 27,
+                "column": 42
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 33,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md.$valid",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 27,
+                "column": 42
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "util.p4",
+                    "line": 20,
+                    "column": 27
+                },
+                {
+                    "file": "",
+                    "line": 33,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md.resubmit_flag",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 27,
+                "column": 42
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "",
+                    "line": 34,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 61,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_md.checksum_udp_tmp",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 26,
+                "column": 24
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "util.p4",
+                    "line": 19,
+                    "column": 9
+                },
+                {
+                    "file": "util.p4",
+                    "line": 32,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 33,
+                    "column": 29
+                },
+                {
+                    "file": "",
+                    "line": 39,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 47,
+                    "column": 9
+                },
+                {
+                    "file": "",
+                    "line": 59,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.pkt",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 24,
+                "column": 19
+            },
+            "scope": [],
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [],
+            "symbol_name": "cond-1",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 149,
+                "column": 9
+            },
+            "scope": [],
+            "symbol_type": "IfStatement"
+        },
+        {
+            "references": [],
+            "symbol_name": "cond-2",
+            "aliases": [],
+            "declaration": {
+                "file": "",
+                "line": 149,
+                "column": 9
+            },
+            "scope": [],
+            "symbol_type": "IfStatement"
+        }
+    ],
+    "source_root": "hesam_switch.p4"
+}

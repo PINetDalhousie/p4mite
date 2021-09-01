@@ -67,7 +67,7 @@ parser SwitchIngressParser(
 // Ingress
 // ---------------------------------------------------------------------------
 
-Register<bit<32>, bit<16>>(4096) bloom_filter;
+Register<bit<32>, bit<16>>(16) bloom_filter;
 
 control SwitchIngress(
         inout header_t hdr,
@@ -82,7 +82,7 @@ control SwitchIngress(
         pktcount.count();
     }
 
-
+    //Register<bit<32>, bit<16>>(16) bloom_filter;
     RegisterAction<bit<32>, bit<16>, bit<32>>(bloom_filter) read = {
         void apply(inout bit<32> value, out bit<32> rv) {
             if (value == 0){
@@ -96,11 +96,11 @@ control SwitchIngress(
     action LB_forward(mac_addr_t dst_mac, ipv4_addr_t dst_ip, PortId_t port) {
 
         {
-            temp = hash.get({   hdr.ipv4.src_addr, 
+            bit<16> temp = (bit<16>) hash.get({   hdr.ipv4.src_addr, 
                                 hdr.ipv4.dst_addr, 
                                 hdr.udp.src_port, 
-                                hdr.udp.dst_port});
-            hdr.ipv4.dst_addr = bloom_filter_alu_1.execute(temp);
+                                hdr.udp.dst_port})[3:0];
+            hdr.ipv4.dst_addr = read.execute(temp);
         }
 
         // ig_intr_tm_md.ucast_egress_port = port;
@@ -127,7 +127,7 @@ control SwitchIngress(
     action drop_() {
         ig_intr_dprsr_md.drop_ctl = 0;
     }
-    action ipv4_forward(PortId_t port) {
+    action ipv4_forward(PortId_t port, mac_addr_t dst_mac) {
         ig_intr_tm_md.ucast_egress_port = port;
         hdr.ethernet.dst_addr = dst_mac;
         hdr.ipv4.ttl = hdr.ipv4.ttl - 1;

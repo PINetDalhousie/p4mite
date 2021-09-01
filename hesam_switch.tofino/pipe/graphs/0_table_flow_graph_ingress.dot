@@ -1,0 +1,34 @@
+digraph ingress {
+cond_2 [ shape=record, style="filled", fillcolor=cornsilk, label="hdr.ipv4.$valid == 1\l\l
+ "];
+LB_0 [ shape=record, style="filled", fillcolor=cornsilk, label="LB_0\l\l
+M:\l
+ hdr.ipv4.dst_addr\l
+\lW:\l
+ temp_0\l
+ hdr.ipv4.dst_addr\l
+ ig_intr_md_for_dprsr.drop_ctl\l
+ "];
+ipv4_lpm_0 [ shape=record, style="filled", fillcolor=cornsilk, label="ipv4_lpm_0\l\l
+M:\l
+ hdr.ipv4.dst_addr\l
+\lR:\l
+ hdr.ipv4.ttl\l
+\lW:\l
+ ig_intr_md_for_tm.ucast_egress_port\l
+ hdr.ethernet.dst_addr\l
+ hdr.ipv4.ttl\l
+ ig_intr_md_for_dprsr.drop_ctl\l
+ "];
+tbl_hesam_switch152 [ shape=record, style="filled", fillcolor=cornsilk, label="tbl_hesam_switch152\l\l
+W:\l
+ ig_intr_md_for_tm.bypass_egress\l
+ "];
+    PARSER -> cond_2
+    cond_2 -> LB_0
+    PARSER -> cond_2
+    cond_2 -> DEPARSER
+    LB_0 -> ipv4_lpm_0
+    ipv4_lpm_0 -> tbl_hesam_switch152
+    tbl_hesam_switch152 -> DEPARSER
+}

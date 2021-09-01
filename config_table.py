@@ -9,6 +9,7 @@ table2 = bfrt.hesam_switch.pipe.SwitchIngress.LB
 entry = table2.entry_with_LB_forward(dst_addr=0x0A320064).push()
 table2.dump(from_hw=True)
 
+bfrt.hesam_switch.pipe.bloom_filter.dump(from_hw=True)
 
 #entry = table2.entry_with_LB_forward(dst_addr=0x0A320064 , dst_mac=0xb8599fdf07cb , dst_ip=0x0A32000b, port="48").push()
 

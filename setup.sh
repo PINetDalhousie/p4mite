@@ -7,10 +7,8 @@ pkill switchd
 source /root/bin/set_sde.sh
 
 
-cd hesam_switch/
 bf-p4c hesam_switch.p4
 cp_p4 hesam_switch
-cd ..
 
 
 #Launch the switch

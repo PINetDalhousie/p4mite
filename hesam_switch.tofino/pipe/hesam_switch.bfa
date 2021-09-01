@@ -1,0 +1,446 @@
+version:
+  version: 1.0.1
+  run_id: "63ef9ff2a356e97a"
+  target: Tofino
+phv ingress:
+  hdr.ethernet.dst_addr.0-31: W1
+  hdr.ethernet.dst_addr.32-47: H1
+  hdr.ethernet.src_addr.0-31: TW2
+  hdr.ethernet.src_addr.32-47: TH4
+  hdr.ethernet.ether_type: TH3
+  hdr.ipv4.version: TW0(28..31)
+  hdr.ipv4.ihl: TW0(24..27)
+  hdr.ipv4.diffserv: TW0(16..23)
+  hdr.ipv4.total_len: TW0(0..15)
+  hdr.ipv4.identification: TW1(16..31)
+  hdr.ipv4.flags: TW1(13..15)
+  hdr.ipv4.frag_offset: TW1(0..12)
+  hdr.ipv4.ttl: B0
+  hdr.ipv4.protocol: TB0
+  hdr.ipv4.hdr_checksum: TH5
+  hdr.ipv4.src_addr: W3
+  hdr.ipv4.dst_addr: W2
+  hdr.udp.src_port: W0(16..31)
+  hdr.udp.dst_port: W0(0..15)
+  hdr.udp.hdr_length: TH2
+  hdr.udp.checksum: TH1
+  ig_md.checksum_udp_tmp: TH0
+  temp_0: H2
+  ig_intr_md_for_dprsr.drop_ctl: B1(0..2)
+  ig_intr_md_for_tm.ucast_egress_port: H0(0..8)
+  ig_intr_md_for_tm.bypass_egress: B1(3)
+  hdr.ethernet.$valid: B2(0)
+  hdr.ipv4.$valid: B2(1)
+  hdr.udp.$valid: B2(2)
+phv egress:
+parser ingress:
+  start: $entry_point
+  init_zero: [ TH0, H2, B1, B2 ]
+  bitwise_or: [ B2 ]
+  hdr_len_adj: 16
+  states:
+    $entry_point:
+      *:
+        load: { byte1 : 0 }
+        buf_req: 1
+        next: start
+    start:
+      match: [ byte1 ]
+      0b1*******:
+        shift: 8
+        buf_req: 8
+        next: end
+      0b0*******:
+        load: { half : 28..29 }
+        shift: 8
+        buf_req: 30
+        next: TofinoIngressParser_parse_port_metadata
+    TofinoIngressParser_parse_port_metadata:
+      match: [ half ]
+      0x0800:
+        8..9: H1  # ingress::hdr.ethernet.dst_addr[47:32].32-47
+        10..13: W1  # ingress::hdr.ethernet.dst_addr[31:0].0-31
+        14..15: TH4  # ingress::hdr.ethernet.src_addr[47:32].32-47
+        16..19: TW2  # ingress::hdr.ethernet.src_addr[31:0].0-31
+        20..21: TH3  # ingress::hdr.ethernet.ether_type
+        B2: 1  # value 1 -> B2 bit[0]: ingress::hdr.ethernet.$valid
+        load: { byte1 : 31 }
+        shift: 22
+        buf_req: 32
+        next: parse_ipv4
+      0x****:
+        8..9: H1  # ingress::hdr.ethernet.dst_addr[47:32].32-47
+        10..13: W1  # ingress::hdr.ethernet.dst_addr[31:0].0-31
+        14..15: TH4  # ingress::hdr.ethernet.src_addr[47:32].32-47
+        16..19: TW2  # ingress::hdr.ethernet.src_addr[31:0].0-31
+        20..21: TH3  # ingress::hdr.ethernet.ether_type
+        B2: 1  # value 1 -> B2 bit[0]: ingress::hdr.ethernet.$valid
+        shift: 22
+        buf_req: 22
+        next: end
+    parse_ipv4:
+      match: [ byte1 ]
+      0x11:
+        checksum 0:
+          type: RESIDUAL
+          mask: [ 16..19 ]
+          swap: 0
+          start: 1
+          end: 0
+        0..3: TW0
+            # - bit[0..3] -> TW0 bit[31..28]: ingress::hdr.ipv4.version
+            # - bit[4..7] -> TW0 bit[27..24]: ingress::hdr.ipv4.ihl
+            # - bit[8..15] -> TW0 bit[23..16]: ingress::hdr.ipv4.diffserv
+            # - bit[16..31] -> TW0 bit[15..0]: ingress::hdr.ipv4.total_len
+        4..7: TW1
+            # - bit[32..47] -> TW1 bit[31..16]: ingress::hdr.ipv4.identification
+            # - bit[48..50] -> TW1 bit[15..13]: ingress::hdr.ipv4.flags
+            # - bit[51..63] -> TW1 bit[12..0]: ingress::hdr.ipv4.frag_offset
+        8: B0  # ingress::hdr.ipv4.ttl
+        9: TB0  # ingress::hdr.ipv4.protocol
+        10..11: TH5  # ingress::hdr.ipv4.hdr_checksum
+        12..15: W3  # ingress::hdr.ipv4.src_addr
+        16..19: W2  # ingress::hdr.ipv4.dst_addr
+        B2: 2  # value 1 -> B2 bit[1]: ingress::hdr.ipv4.$valid
+        shift: 20
+        buf_req: 20
+        next: parse_udp
+      0x**:
+        checksum 0:
+          type: RESIDUAL
+          mask: [ 16..19 ]
+          swap: 0
+          start: 1
+          end: 0
+        0..3: TW0
+            # - bit[0..3] -> TW0 bit[31..28]: ingress::hdr.ipv4.version
+            # - bit[4..7] -> TW0 bit[27..24]: ingress::hdr.ipv4.ihl
+            # - bit[8..15] -> TW0 bit[23..16]: ingress::hdr.ipv4.diffserv
+            # - bit[16..31] -> TW0 bit[15..0]: ingress::hdr.ipv4.total_len
+        4..7: TW1
+            # - bit[32..47] -> TW1 bit[31..16]: ingress::hdr.ipv4.identification
+            # - bit[48..50] -> TW1 bit[15..13]: ingress::hdr.ipv4.flags
+            # - bit[51..63] -> TW1 bit[12..0]: ingress::hdr.ipv4.frag_offset
+        8: B0  # ingress::hdr.ipv4.ttl
+        9: TB0  # ingress::hdr.ipv4.protocol
+        10..11: TH5  # ingress::hdr.ipv4.hdr_checksum
+        12..15: W3  # ingress::hdr.ipv4.src_addr
+        16..19: W2  # ingress::hdr.ipv4.dst_addr
+        B2: 2  # value 1 -> B2 bit[1]: ingress::hdr.ipv4.$valid
+        shift: 20
+        buf_req: 20
+        next: end
+    parse_udp:
+      *:
+        checksum 0:
+          type: RESIDUAL
+          mask: [ 6..7 ]
+          swap: 0
+          start: 0
+          end: 1
+          dest: TH0
+          end_pos: 7
+        0..3: W0
+            # - bit[0..15] -> W0 bit[31..16]: ingress::hdr.udp.src_port
+            # - bit[16..31] -> W0 bit[15..0]: ingress::hdr.udp.dst_port
+        4..5: TH2  # ingress::hdr.udp.hdr_length
+        6..7: TH1  # ingress::hdr.udp.checksum
+        B2: 4  # value 1 -> B2 bit[2]: ingress::hdr.udp.$valid
+        shift: 8
+        buf_req: 8
+        next: end
+deparser ingress:
+  dictionary:
+    H1: B2(0)  # ingress::hdr.ethernet.dst_addr.32-47 if ingress::hdr.ethernet.$valid
+    W1: B2(0)  # ingress::hdr.ethernet.dst_addr.0-31 if ingress::hdr.ethernet.$valid
+    TH4: B2(0)  # ingress::hdr.ethernet.src_addr.32-47 if ingress::hdr.ethernet.$valid
+    TW2: B2(0)  # ingress::hdr.ethernet.src_addr.0-31 if ingress::hdr.ethernet.$valid
+    TH3: B2(0)  # ingress::hdr.ethernet.ether_type if ingress::hdr.ethernet.$valid
+    TW0: B2(1)
+        # - bit[31..28]: ingress::hdr.ipv4.version if ingress::hdr.ipv4.$valid
+        # - bit[27..24]: ingress::hdr.ipv4.ihl if ingress::hdr.ipv4.$valid
+        # - bit[23..16]: ingress::hdr.ipv4.diffserv if ingress::hdr.ipv4.$valid
+        # - bit[15..0]: ingress::hdr.ipv4.total_len if ingress::hdr.ipv4.$valid
+    TW1: B2(1)
+        # - bit[31..16]: ingress::hdr.ipv4.identification if ingress::hdr.ipv4.$valid
+        # - bit[15..13]: ingress::hdr.ipv4.flags if ingress::hdr.ipv4.$valid
+        # - bit[12..0]: ingress::hdr.ipv4.frag_offset if ingress::hdr.ipv4.$valid
+    B0: B2(1)  # ingress::hdr.ipv4.ttl if ingress::hdr.ipv4.$valid
+    TB0: B2(1)  # ingress::hdr.ipv4.protocol if ingress::hdr.ipv4.$valid
+    full_checksum 0: B2(1)  # ingress::hdr.ipv4.$valid
+    W3: B2(1)  # ingress::hdr.ipv4.src_addr if ingress::hdr.ipv4.$valid
+    W2: B2(1)  # ingress::hdr.ipv4.dst_addr if ingress::hdr.ipv4.$valid
+    W0: B2(2)
+        # - bit[31..16]: ingress::hdr.udp.src_port if ingress::hdr.udp.$valid
+        # - bit[15..0]: ingress::hdr.udp.dst_port if ingress::hdr.udp.$valid
+    TH2: B2(2)  # ingress::hdr.udp.hdr_length if ingress::hdr.udp.$valid
+    full_checksum 1: B2(2)  # ingress::hdr.udp.$valid
+  partial_checksum 0: 
+    - TW0: { }
+        # - bit[31..28]: ingress::hdr.ipv4.version
+        # - bit[27..24]: ingress::hdr.ipv4.ihl
+        # - bit[23..16]: ingress::hdr.ipv4.diffserv
+        # - bit[15..0]: ingress::hdr.ipv4.total_len
+    - TW1: { }
+        # - bit[31..16]: ingress::hdr.ipv4.identification
+        # - bit[15..13]: ingress::hdr.ipv4.flags
+        # - bit[12..0]: ingress::hdr.ipv4.frag_offset
+    - B0: { swap: 1 }  # ingress::hdr.ipv4.ttl
+    - TB0: { }  # ingress::hdr.ipv4.protocol
+    - W3: { }  # ingress::hdr.ipv4.src_addr
+    - W2: { }  # ingress::hdr.ipv4.dst_addr
+  full_checksum 0: 
+    - partial_checksum 0: { }
+  partial_checksum 1: 
+    - W2: { }  # ingress::hdr.ipv4.dst_addr
+    - TH0: { }  # ingress::ig_md.checksum_udp_tmp
+  full_checksum 1: 
+    - zeros_as_ones: true
+    - partial_checksum 1: { }
+  egress_unicast_port: H0(0..8)  # bit[8..0]: ingress::ig_intr_md_for_tm.ucast_egress_port
+  bypss_egr: B1(3..3)  # bit[3]: ingress::ig_intr_md_for_tm.bypass_egress
+  drop_ctl: B1(0..2)  # bit[2..0]: ingress::ig_intr_md_for_dprsr.drop_ctl
+parser egress:
+  start: $entry_point.start
+  hdr_len_adj: 0
+  meta_opt: 0
+  states:
+    $entry_point.start:
+      *:
+        buf_req: 0
+        next: end
+deparser egress:
+  dictionary: {}
+stage 0 ingress:
+  phase0_match SwitchIngressParser.$PORT_METADATA:
+    p4:
+      name: SwitchIngressParser.$PORT_METADATA
+      size: 288
+      preferred_match_type: exact
+      match_type: exact
+    size: 288
+    p4_param_order:
+      ig_intr_md.ingress_port: { type: exact, size: 9 }
+    format: {ig_intr_md: 0..63}
+    constant_value: 0
+    actions:
+      set_port_metadata:
+      - handle: 0x20000000
+      - p4_param_order: { ig_intr_md: 64 } 
+  exact_match LB_0 0:
+    p4: { name: SwitchIngress.LB, size: 1024 }
+    p4_param_order: 
+      hdr.ipv4.dst_addr: { type: exact, size: 32, full_size: 32 }
+    row: 7
+    bus: 0
+    column: [ 2, 3, 4, 5 ]
+    stash: 
+      row: [ 7 ]
+      col: [ 2 ]
+      unit: [ 0 ]
+    ways:
+      - [0, 0, 0x0, [7, 2]]
+      - [0, 1, 0x0, [7, 3]]
+      - [0, 2, 0x0, [7, 4]]
+      - [0, 3, 0x0, [7, 5]]
+    hash_dist:
+      0: { hash: 1, mask: 0xffff, shift: 0 }
+      1: { hash: 1, mask: 0xffff, shift: 5 }
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.dst_addr }
+      hash 0:
+        0..7: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        8..9: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+        11..18: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        19: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8)
+        10: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(9)
+        22..29: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        20..21: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+        33..39: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..6)
+        30: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(7)
+        31..32: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+      hash group 0:
+        table: [0]
+        seed: 0xc27f351091
+      exact group 1: { 0: hdr.udp.dst_port, 16: hdr.udp.src_port, 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }
+      hash 2:
+        0..3: slice(stripe(crc_rev(0xc002, 0x0, 0x0, 96, { 0: hdr.udp.dst_port, 16: hdr.udp.src_port, 32: hdr.ipv4.dst_addr }, { })), 0..3)
+      hash 3:
+        0..3: slice(stripe(crc_rev(0xc002, 0x0, 0x0, 96, { 64: hdr.ipv4.src_addr }, { })), 0..3)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x0
+      exact group 1: { 96: temp_0 }
+      hash 3:
+        16..31: temp_0
+      hash group 1:
+        table: [3]
+        seed: 0x0
+    format: { action(0): 0..1, version(0): 112..115, meter_pfe(0): 2..2, meter_type(0): 3..5, match(0): [50..55, 32..47 ] }
+    match: [ hdr.ipv4.dst_addr(10..15), hdr.ipv4.dst_addr(16..23), hdr.ipv4.dst_addr(24..31) ]
+    match_group_map: [ [ 0 ] ]
+    gateway:
+      name: cond-2
+      input_xbar:
+        exact group 0: { 33: hdr.ipv4.$valid }
+      row: 7
+      bus: 0
+      unit: 0
+      payload_row: 7
+      payload_unit: 0
+      match_address: 0x7ffff
+      match: { 1: hdr.ipv4.$valid }
+      0b******1: run_table
+      miss:  END
+      condition: 
+        expression: "(hdr.ipv4.$valid == 1)"
+        true:  LB_0
+        false:  END
+    hit: [  tbl_hesam_switch152 ]
+    miss:  tbl_hesam_switch152
+    action_bus: { 32..33 : hash_dist(0, lo), 96..99 : LB_0$salu.bloom_filter(0..31) }
+    stats: LB_0$stats.SwitchIngress.pktcount($DIRECT, $DEFAULT)
+    stateful: LB_0$salu.bloom_filter(hash_dist 1, meter_pfe, meter_type)
+    instruction: LB_0(action, $DEFAULT)
+    actions:
+      SwitchIngress.LB_forward(1, 1):
+      - p4_param_order: { dst_mac: 48, dst_ip: 32, port: 9 }
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000001
+      - next_table: 0
+      - set hdr.ipv4.dst_addr, LB_0$salu.bloom_filter
+      - set H2, hash_dist(0, 0..15)
+      - LB_0$salu.bloom_filter(read_0, $hash_dist)
+      - LB_0$stats.SwitchIngress.pktcount($DIRECT)
+      SwitchIngress.drop(2, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000002
+      - next_table: 0
+      - set ig_intr_md_for_dprsr.drop_ctl, 0
+      - LB_0$stats.SwitchIngress.pktcount($DIRECT)
+    default_action: SwitchIngress.drop
+  counter LB_0$stats.SwitchIngress.pktcount:
+    p4: { name: SwitchIngress.pktcount }
+    row: 13
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    vpns: [ 0, 1 ]
+    home_row: 13
+    count: packets
+    format: {packets(0): 96..127, packets(1): 64..95, packets(2): 32..63, packets(3): 0..31}
+    lrt:
+    - { threshold: 23718048, interval: 268435200 }
+    - { threshold: 23718048, interval: 268435200 }
+    - { threshold: 23718048, interval: 268435200 }
+  stateful LB_0$salu.bloom_filter:
+    p4: { name: bloom_filter, size: 16 }
+    row: 15
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    home_row: 15
+    format: { lo: 32 }
+    actions:
+      read_0:
+      - equ lo, lo
+      - alu_a cmplo, lo, 171048971
+      - output alu_lo
+stage 1 ingress:
+  dependency: action
+  ternary_match tbl_hesam_switch152 0:
+    p4: { name: tbl_hesam_switch152, hidden: true }
+    hit: [  ipv4_lpm_0 ]
+    miss:  ipv4_lpm_0
+    indirect: tbl_hesam_switch152$tind
+  ternary_indirect tbl_hesam_switch152$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_hesam_switch152$tind(action, $DEFAULT)
+    actions:
+      hesam_switch152(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000005
+      - next_table: 0
+      - set ig_intr_md_for_tm.bypass_egress, 1
+    default_action: hesam_switch152
+stage 2 ingress:
+  dependency: match
+  exact_match ipv4_lpm_0 0:
+    p4: { name: SwitchIngress.ipv4_lpm, size: 1024 }
+    p4_param_order: 
+      hdr.ipv4.dst_addr: { type: exact, size: 32, full_size: 32 }
+    row: 7
+    bus: 0
+    column: [ 2, 3, 4, 5 ]
+    stash: 
+      row: [ 7 ]
+      col: [ 2 ]
+      unit: [ 0 ]
+    ways:
+      - [0, 0, 0x0, [7, 2]]
+      - [0, 1, 0x0, [7, 3]]
+      - [0, 2, 0x0, [7, 4]]
+      - [0, 3, 0x0, [7, 5]]
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.dst_addr }
+      hash 0:
+        0..7: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        8..9: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+        11..18: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        19: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8)
+        10: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(9)
+        22..29: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        20..21: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+        33..39: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..6)
+        30: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(7)
+        31..32: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+      hash group 0:
+        table: [0]
+        seed: 0x9a9c47831a
+    format: { action(0): 0..0, immediate(0): 1..32, version(0): 112..115, match(0): 34..55 }
+    match: [ hdr.ipv4.dst_addr(10..15), hdr.ipv4.dst_addr(16..23), hdr.ipv4.dst_addr(24..31) ]
+    match_group_map: [ [ 0 ] ]
+    hit: [  END ]
+    miss:  END
+    action_bus: { 64..65 : immediate(0..15), 66..67 : immediate(16..31) }
+    action: ipv4_lpm_0$action_data($DIRECT, $DEFAULT)
+    instruction: ipv4_lpm_0(action, $DEFAULT)
+    actions:
+      SwitchIngress.ipv4_forward(0, 1):
+      - p4_param_order: { port: 9, dst_mac: 48 }
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000003
+      - next_table: 0
+      - { dst_mac.0-31: $adf_f0(0..31), port: immediate(0..8), dst_mac.32-47: immediate(16..31) }
+      - set ig_intr_md_for_tm.ucast_egress_port, port
+      - set hdr.ethernet.dst_addr.0-31, dst_mac.0-31
+      - set hdr.ethernet.dst_addr.32-47, dst_mac.32-47
+      - add hdr.ipv4.ttl, hdr.ipv4.ttl, 255
+      SwitchIngress.drop_(1, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000004
+      - next_table: 0
+      - {  }
+      - set ig_intr_md_for_dprsr.drop_ctl, 0
+    default_action: SwitchIngress.drop_
+  action ipv4_lpm_0$action_data:
+    p4: { name: SwitchIngress.ipv4_lpm$action }
+    row: 15
+    logical_bus: A
+    column: 0
+    vpns: [ 0 ]
+    home_row:
+    - 15
+    format SwitchIngress.ipv4_forward: { $adf_f0: 0..31 }
+    action_bus: { 96..99 : $adf_f0 }
+
+
+primitives: "hesam_switch.tofino/pipe//hesam_switch.prim.json"
+dynhash: "hesam_switch.tofino/pipe//hesam_switch.dynhash.json"
