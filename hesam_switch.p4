@@ -17,6 +17,8 @@ struct metadata_t {
 const bit<16> TYPE_IPV4 = 0x800;
 
 
+// bit<32> smartnic = 0x0A32000B;
+
 // ---------------------------------------------------------------------------
 // Ingress parser
 // ---------------------------------------------------------------------------
@@ -66,8 +68,7 @@ parser SwitchIngressParser(
 // ---------------------------------------------------------------------------
 // Ingress
 // ---------------------------------------------------------------------------
-
-Register<bit<32>, bit<16>>(16) bloom_filter;
+Register<bit<32>, bit<8>>(16) bloom_filter;
 
 control SwitchIngress(
         inout header_t hdr,
@@ -76,41 +77,37 @@ control SwitchIngress(
         in ingress_intrinsic_metadata_from_parser_t ig_intr_prsr_md,
         inout ingress_intrinsic_metadata_for_deparser_t ig_intr_dprsr_md,
         inout ingress_intrinsic_metadata_for_tm_t ig_intr_tm_md) {
+    
+    RegisterAction<bit<32>, bit<8>, bit<32>>(bloom_filter) read = {
+        void apply(inout bit<32> value, out bit<32> rv) {
+		if (value == 0) { value = 0x0a32000b; }
+		rv = value;
+        }
+    };
+	RegisterAction<bit<32>, bit<8>, bit<32>>(bloom_filter) clear_bloom_filter = {
+		void apply(inout bit<32> value) {
+			value = 0;
+		}
+	};
+
     DirectCounter<bit<32>>(CounterType_t.PACKETS) pktcount;
     action drop() {
         ig_intr_dprsr_md.drop_ctl = 0;
         pktcount.count();
     }
-
-    //Register<bit<32>, bit<16>>(16) bloom_filter;
-    RegisterAction<bit<32>, bit<16>, bit<32>>(bloom_filter) read = {
-        void apply(inout bit<32> value, out bit<32> rv) {
-            if (value == 0){
-                value = 0x0A32000b;
-            }
-            rv = value;
-        }
-    };
-
-    Hash<bit<16>>(HashAlgorithm_t.CRC16) hash;
-    action LB_forward(mac_addr_t dst_mac, ipv4_addr_t dst_ip, PortId_t port) {
+    Hash<bit<8>>(HashAlgorithm_t.CRC8) hash;
+    action LB_forward() {
 
         {
-            bit<16> temp = (bit<16>) hash.get({   hdr.ipv4.src_addr, 
-                                hdr.ipv4.dst_addr, 
-                                hdr.udp.src_port, 
-                                hdr.udp.dst_port})[3:0];
-            hdr.ipv4.dst_addr = read.execute(temp);
+            bit<8> index = hash.get({ hdr.udp.src_port,
+				hdr.udp.dst_port,
+				hdr.ipv4.src_addr});
+            hdr.ipv4.dst_addr = read.execute(index);
         }
-
-        // ig_intr_tm_md.ucast_egress_port = port;
-        // hdr.ethernet.dst_addr = dst_mac;
-        // hdr.ipv4.dst_addr = dst_ip;
-        
 
         pktcount.count();
     }
-    
+
     table LB {
         key = {
             hdr.ipv4.dst_addr: exact;
@@ -129,7 +126,7 @@ control SwitchIngress(
     }
     action ipv4_forward(PortId_t port, mac_addr_t dst_mac) {
         ig_intr_tm_md.ucast_egress_port = port;
-        hdr.ethernet.dst_addr = dst_mac;
+	hdr.ethernet.dst_addr = dst_mac;
         hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
     }
     
@@ -137,18 +134,40 @@ control SwitchIngress(
         key = {
             hdr.ipv4.dst_addr: exact;
         }
-        actions = {
+        actions = { 
             ipv4_forward;
             drop_;
         }
         size = 1024;
         default_action = drop_();
     }
-    
+	
+	DirectCounter<bit<32>>(CounterType_t.PACKETS) pktcount2;
+	Hash<bit<8>>(HashAlgorithm_t.CRC8) hash2;
+	action clear_table_action (){
+		{
+			bit<8> index2 = hash2.get({ hdr.udp.dst_port,
+				hdr.udp.src_port,
+				hdr.ipv4.dst_addr});
+			clear_bloom_filter.execute(index2);
+		}
+		pktcount2.count();	
+	}
+	table clear_table {
+		key = {
+			hdr.ipv4.src_addr: exact;
+		}
+		actions = {
+			clear_table_action;
+		}
+		counters = pktcount2;
+		size = 1024;
+	}
     apply {
         if (hdr.ipv4.isValid()) {
-            LB.apply();
-            ipv4_lpm.apply();
+		LB.apply();
+		ipv4_lpm.apply();
+		clear_table.apply();
         ig_intr_tm_md.bypass_egress = 1w1;
         }
     } 
@@ -199,4 +218,5 @@ Pipeline(SwitchIngressParser(),
          EmptyEgressDeparser()) pipe;
 
 Switch(pipe) main;
+
 

@@ -5,7 +5,6 @@ LB_0 [ shape=record, style="filled", fillcolor=cornsilk, label="LB_0\l\l
 M:\l
  hdr.ipv4.dst_addr\l
 \lW:\l
- temp_0\l
  hdr.ipv4.dst_addr\l
  ig_intr_md_for_dprsr.drop_ctl\l
  "];
@@ -20,7 +19,11 @@ M:\l
  hdr.ipv4.ttl\l
  ig_intr_md_for_dprsr.drop_ctl\l
  "];
-tbl_hesam_switch152 [ shape=record, style="filled", fillcolor=cornsilk, label="tbl_hesam_switch152\l\l
+clear_table_0 [ shape=record, style="filled", fillcolor=cornsilk, label="clear_table_0\l\l
+M:\l
+ hdr.ipv4.src_addr\l
+\l "];
+tbl_hesam_switch171 [ shape=record, style="filled", fillcolor=cornsilk, label="tbl_hesam_switch171\l\l
 W:\l
  ig_intr_md_for_tm.bypass_egress\l
  "];
@@ -29,6 +32,7 @@ W:\l
     PARSER -> cond_2
     cond_2 -> DEPARSER
     LB_0 -> ipv4_lpm_0
-    ipv4_lpm_0 -> tbl_hesam_switch152
-    tbl_hesam_switch152 -> DEPARSER
+    ipv4_lpm_0 -> clear_table_0
+    clear_table_0 -> tbl_hesam_switch171
+    tbl_hesam_switch171 -> DEPARSER
 }

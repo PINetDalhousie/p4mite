@@ -29,44 +29,7 @@
           "name" : "SwitchIngress.LB_forward",
           "action_scope" : "TableAndDefault",
           "annotations" : [],
-          "data" : [
-            {
-              "id" : 1,
-              "name" : "dst_mac",
-              "repeated" : false,
-              "mandatory" : true,
-              "read_only" : false,
-              "annotations" : [],
-              "type" : {
-                "type" : "bytes",
-                "width" : 48
-              }
-            },
-            {
-              "id" : 2,
-              "name" : "dst_ip",
-              "repeated" : false,
-              "mandatory" : true,
-              "read_only" : false,
-              "annotations" : [],
-              "type" : {
-                "type" : "bytes",
-                "width" : 32
-              }
-            },
-            {
-              "id" : 3,
-              "name" : "port",
-              "repeated" : false,
-              "mandatory" : true,
-              "read_only" : false,
-              "annotations" : [],
-              "type" : {
-                "type" : "bytes",
-                "width" : 9
-              }
-            }
-          ]
+          "data" : []
         },
         {
           "id" : 23258667,
@@ -160,6 +123,67 @@
       ],
       "data" : [],
       "supported_operations" : [],
+      "attributes" : ["EntryScope"]
+    },
+    {
+      "name" : "pipe.SwitchIngress.clear_table",
+      "id" : 40971483,
+      "table_type" : "MatchAction_Direct",
+      "size" : 1024,
+      "annotations" : [],
+      "depends_on" : [],
+      "has_const_default_action" : false,
+      "key" : [
+        {
+          "id" : 1,
+          "name" : "hdr.ipv4.src_addr",
+          "repeated" : false,
+          "annotations" : [],
+          "mandatory" : false,
+          "match_type" : "Exact",
+          "type" : {
+            "type" : "bytes",
+            "width" : 32
+          }
+        }
+      ],
+      "action_specs" : [
+        {
+          "id" : 18992423,
+          "name" : "SwitchIngress.clear_table_action",
+          "action_scope" : "TableAndDefault",
+          "annotations" : [],
+          "data" : []
+        },
+        {
+          "id" : 21257015,
+          "name" : "NoAction",
+          "action_scope" : "DefaultOnly",
+          "annotations" : [
+            {
+              "name" : "@defaultonly"
+            }
+          ],
+          "data" : []
+        }
+      ],
+      "data" : [
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 65554,
+            "name" : "$COUNTER_SPEC_PKTS",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "uint64",
+              "default_value" : 0
+            }
+          }
+        }
+      ],
+      "supported_operations" : ["SyncCounters"],
       "attributes" : ["EntryScope"]
     },
     {
@@ -363,34 +387,6 @@
           "read_only" : false,
           "singleton" : {
             "id" : 1,
-            "name" : "hdr.ipv4.src_addr.$PRIORITY",
-            "repeated" : false,
-            "annotations" : [],
-            "type" : {
-              "type" : "uint32",
-              "default_value" : 0
-            }
-          }
-        },
-        {
-          "mandatory" : false,
-          "read_only" : false,
-          "singleton" : {
-            "id" : 2,
-            "name" : "hdr.ipv4.dst_addr.$PRIORITY",
-            "repeated" : false,
-            "annotations" : [],
-            "type" : {
-              "type" : "uint32",
-              "default_value" : 0
-            }
-          }
-        },
-        {
-          "mandatory" : false,
-          "read_only" : false,
-          "singleton" : {
-            "id" : 3,
             "name" : "hdr.udp.src_port.$PRIORITY",
             "repeated" : false,
             "annotations" : [],
@@ -404,8 +400,221 @@
           "mandatory" : false,
           "read_only" : false,
           "singleton" : {
-            "id" : 4,
+            "id" : 2,
             "name" : "hdr.udp.dst_port.$PRIORITY",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "uint32",
+              "default_value" : 0
+            }
+          }
+        },
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 3,
+            "name" : "hdr.ipv4.src_addr.$PRIORITY",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "uint32",
+              "default_value" : 0
+            }
+          }
+        }
+      ],
+      "supported_operations" : [],
+      "attributes" : ["DynamicHashing"]
+    },
+    {
+      "name" : "pipe.SwitchIngress.hash2.algorithm",
+      "id" : 2509104230,
+      "table_type" : "DynHashAlgorithm",
+      "size" : 1,
+      "annotations" : [],
+      "depends_on" : [],
+      "key" : [],
+      "data" : [
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 65570,
+            "name" : "seed",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "uint32",
+              "default_value" : 0
+            }
+          }
+        },
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 65571,
+            "name" : "msb",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "bool",
+              "default_value" : false
+            }
+          }
+        },
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 65572,
+            "name" : "extend",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "bool",
+              "default_value" : false
+            }
+          }
+        }
+      ],
+      "action_specs" : [
+        {
+          "id" : 65573,
+          "name" : "pre_defined",
+          "action_scope" : "TableAndDefault",
+          "annotations" : [],
+          "data" : [
+            {
+              "id" : 1,
+              "name" : "algorithm_name",
+              "repeated" : false,
+              "mandatory" : false,
+              "read_only" : false,
+              "annotations" : [],
+              "type" : {
+                "type" : "string",
+                "choices" : ["IDENTITY", "RANDOM", "XOR", "CRC_8", "CRC_8_DARC", "CRC_8_I_CODE", "CRC_8_ITU", "CRC_8_MAXIM", "CRC_8_ROHC", "CRC_8_WCDMA", "CRC_16", "CRC_16_BYPASS", "CRC_16_DDS_110", "CRC_16_DECT", "CRC_16_DECT_R", "CRC_16_DECT_X", "CRC_16_DNP", "CRC_16_EN_13757", "CRC_16_GENIBUS", "CRC_16_MAXIM", "CRC_16_MCRF4XX", "CRC_16_RIELLO", "CRC_16_T10_DIF", "CRC_16_TELEDISK", "CRC_16_USB", "X_25", "XMODEM", "MODBUS", "KERMIT", "CRC_CCITT_FALSE", "CRC_AUG_CCITT", "CRC_32", "CRC_32_BZIP2", "CRC_32C", "CRC_32D", "CRC_32_MPEG", "POSIX", "CRC_32Q", "JAMCRC", "XFER", "CRC_64", "CRC_64_GO_ISO", "CRC_64_WE", "CRC_64_JONES"],
+                "default_value" : "RANDOM"
+              }
+            }
+          ]
+        },
+        {
+          "id" : 65574,
+          "name" : "user_defined",
+          "action_scope" : "TableAndDefault",
+          "annotations" : [],
+          "data" : [
+            {
+              "id" : 1,
+              "name" : "reverse",
+              "repeated" : false,
+              "mandatory" : false,
+              "read_only" : false,
+              "annotations" : [],
+              "type" : {
+                "type" : "bool",
+                "default_value" : false
+              }
+            },
+            {
+              "id" : 2,
+              "name" : "polynomial",
+              "repeated" : false,
+              "mandatory" : true,
+              "read_only" : false,
+              "annotations" : [],
+              "type" : {
+                "type" : "uint64"
+              }
+            },
+            {
+              "id" : 3,
+              "name" : "init",
+              "repeated" : false,
+              "mandatory" : false,
+              "read_only" : false,
+              "annotations" : [],
+              "type" : {
+                "type" : "uint64",
+                "default_value" : 0
+              }
+            },
+            {
+              "id" : 4,
+              "name" : "final_xor",
+              "repeated" : false,
+              "mandatory" : false,
+              "read_only" : false,
+              "annotations" : [],
+              "type" : {
+                "type" : "uint64",
+                "default_value" : 0
+              }
+            },
+            {
+              "id" : 5,
+              "name" : "hash_bit_width",
+              "repeated" : false,
+              "mandatory" : false,
+              "read_only" : false,
+              "annotations" : [],
+              "type" : {
+                "type" : "uint64"
+              }
+            }
+          ]
+        }
+      ],
+      "supported_operations" : [],
+      "attributes" : []
+    },
+    {
+      "name" : "pipe.SwitchIngress.hash2.$CONFIGURE",
+      "id" : 2475549798,
+      "table_type" : "DynHashConfigure",
+      "size" : 1,
+      "annotations" : [],
+      "depends_on" : [],
+      "key" : [],
+      "data" : [
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 1,
+            "name" : "hdr.udp.dst_port.$PRIORITY",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "uint32",
+              "default_value" : 0
+            }
+          }
+        },
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 2,
+            "name" : "hdr.udp.src_port.$PRIORITY",
+            "repeated" : false,
+            "annotations" : [],
+            "type" : {
+              "type" : "uint32",
+              "default_value" : 0
+            }
+          }
+        },
+        {
+          "mandatory" : false,
+          "read_only" : false,
+          "singleton" : {
+            "id" : 3,
+            "name" : "hdr.ipv4.dst_addr.$PRIORITY",
             "repeated" : false,
             "annotations" : [],
             "type" : {
