@@ -5,9 +5,7 @@ P4mite - resource aware load balancer
 ## Overview
 
 There are multiple folders in the project:
-```bash
-ls
-```
+
 1. [The switches](https://github.com/PINetDalhousie/in-network-dispatcher#Switches)
 2. [The application](https://github.com/PINetDalhousie/in-network-dispatcher#Applications)
 3. [SmartNIC-LB](https://github.com/PINetDalhousie/in-network-dispatcher#SmartNIC-LB)
