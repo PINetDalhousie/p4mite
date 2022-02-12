@@ -6,7 +6,7 @@ P4mite - resource aware load balancer
 
 There are multiple folders in the project:
 
-1. [The switches](https://github.com/PINetDalhousie/in-network-dispatcher#The%Switches)
+1. [The switches](https://github.com/PINetDalhousie/in-network-dispatcher#Switches)
 2. [The application](https://github.com/PINetDalhousie/in-network-dispatcher#Applications)
 <!-- 
 - The switches (P4Mite switch, ECMP switch, and Round-Robin switch) (https://github.com/PINetDalhousie/in-network-dispatcher#Switches)
@@ -17,7 +17,7 @@ There are multiple folders in the project:
 pip install foobar
 ```
 
-# The Switches
+# Switches
 
 ```python
 import foobar
