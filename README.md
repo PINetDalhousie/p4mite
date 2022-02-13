@@ -149,7 +149,7 @@ cd applications/dns/client
 python dnsclient.py --server <SERVER_ADDR>:5053 -R <RATE> 'example.com'
 ```
 
-
+<!-- 
 ```python
 import foobar
 
@@ -161,7 +161,7 @@ foobar.pluralize('goose')
 
 # returns 'phenomenon'
 foobar.singularize('phenomena')
-```
+``` -->
 
 #SmartNIC-LB
 
