@@ -163,7 +163,7 @@ foobar.pluralize('goose')
 foobar.singularize('phenomena')
 ``` -->
 
-#SmartNIC-LB
+# SmartNIC-LB
 
 ```bash
 cd SmartNIC-LB
