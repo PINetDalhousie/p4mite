@@ -6,9 +6,9 @@ P4mite - resource aware load balancer
 
 There are multiple folders in the project:
 
-1. [The switches](https://github.com/PINetDalhousie/in-network-dispatcher#Switches)
-2. [The application](https://github.com/PINetDalhousie/in-network-dispatcher#Applications)
-3. [SmartNIC-LB](https://github.com/PINetDalhousie/in-network-dispatcher#SmartNIC-LB)
+1. The switches
+2. The application
+3. SmartNIC-LB
 
 
 
@@ -179,5 +179,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[Apache License 2.0](https://github.com/PINetDalhousie/in-network-dispatcher/blob/main/LICENSE)
+Apache License 2.0
 
